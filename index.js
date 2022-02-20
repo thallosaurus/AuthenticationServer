@@ -19,6 +19,7 @@
             const token = jwt.sign({
                 "valid": true,
                 "id": 0,
+                "ttl": 3600,    //Time to live in seconds - standart are 5 minutes
                 "username": "root",
             }, getJwtSecret());
 
@@ -39,7 +40,11 @@
         const token = req.query.token;
 
         if (!token) {
-            return jwt.verify(token, getJwtSecret());
+            const decodedToken = jwt.verify(token, getJwtSecret());
+            return {
+                validUntil: (decodedToken.ttl * 1000) + Date.now(),
+                valid: Date.now() < this.validUntil
+            }
         } else return {
             valid: false
         }
@@ -59,7 +64,7 @@
         console.log(res.cookies);
         // validate(res.cookies.token);
         res.send("You are logged in!");
-    })
+    });
 
     app.use("/", static("static"));
 
