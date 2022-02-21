@@ -23,7 +23,7 @@
                 "username": "root",
             }, getJwtSecret());
 
-            res.cookie("token", token);
+            res.setHeader("Authorization", `Bearer ${token}`);
 
             if (req.query.goto != null) {
                 res.redirect(req.query.goto);
@@ -66,7 +66,7 @@
         res.send("You are logged in!");
     });
 
-    app.use("/", static("static"));
+    app.use("/signin", static("static"));
 
     app.listen(9000, () => {
         console.log("Server is running on 9000");
