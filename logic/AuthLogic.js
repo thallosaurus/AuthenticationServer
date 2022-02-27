@@ -45,3 +45,12 @@ module.exports.login = function (username, password) {
 module.exports.verify = function (token) {
     return jwt.verify(token, publicKey);
 }
+
+module.exports.splitAuthHeader = function (header) {
+    let s = header.split(" ");
+
+    return {
+        type: s[0],
+        token: s[1]
+    }
+}

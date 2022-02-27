@@ -1,4 +1,4 @@
-const { auth } = require("../logic/AuthLogic.js");
+const { auth, splitAuthHeader } = require("../logic/AuthLogic.js");
 
 /**
  * This module handles the /auth route
@@ -14,12 +14,9 @@ module.exports = function(req, res) {
 
     const { authorization } = req.header;
 
-    const TYPE_INDEX = 0;
-    const TOKEN_INDEX = 1;
+    const t_array = splitAuthHeader(authorization);
 
-    const t_array = authorization.split(" ");
-
-    switch (t_array[TYPE_INDEX]) {
+    switch (t_array.type) {
         case "Bearer":
             let data = auth(t_array[TOKEN_INDEX]);
             // console.log(data);

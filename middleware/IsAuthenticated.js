@@ -1,16 +1,14 @@
-const { verify } = require("../logic/AuthLogic.js");
+const { verify, splitAuthHeader } = require("../logic/AuthLogic.js");
 const { getSession } = require("../logic/SessionLogic.js");
 
 module.exports = function(req, res, next) {
     // console.log(req);
     if (req.headers["authorization"]) {
         // console.log();
-        let s = req.headers["authorization"].split(" ");
-        const type = s[0];
-        const token = s[1];
-        if (type === "Bearer") {
+        const tToken = splitAuthHeader(req.headers["authorization"]);
+        if (tToken.type === "Bearer") {
             try {
-                verify(token);
+                verify(tToken.token);
                 next();
             } catch (e) {
                 res.status(403).end();
