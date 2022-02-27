@@ -26,6 +26,11 @@ module.exports = function(req, res) {
             }
             break;
         case "application/json":
+            if (!token) {
+                res.status(403);
+                return;
+            }
+
             res.send({
                 "token": token
             });
