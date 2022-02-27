@@ -16,13 +16,9 @@ const isAuthenticated = require("./middleware/isAuthenticated.js");
 
     app.use(cookieParser());
 
-    // app.use(isAuthenticated);
-
     app.get("/", (req, res) => {
         res.send("<p><a href='/signin'>Sign In</a><br></a><a href='/signup'>Sign up</a></p>")
     })
-
-    // console.log(Home);
 
     app.use("/user", isAuthenticated, Home);
 
