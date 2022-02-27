@@ -1,72 +1,43 @@
+const AuthenticationRoute = require("./routes/AuthenticationRoute.js");
+const LoginRoute = require("./routes/LoginRoute.js");
+
+const cookieParser = require("cookie-parser");
+const LogoutRoute = require("./routes/LogoutRoute.js");
+
+const Home = require("./UserArea/Home.js");
+
+const isAuthenticated = require("./middleware/isAuthenticated.js");
+
 (function () {
     const express = require("express");
     const static = require("express-static");
 
-    const jwt = require("jsonwebtoken");
     const app = express();
 
-    function getJwtSecret() {
-        return process.env.SECRET ?? "secret"
-    }
+    app.use(cookieParser());
 
-    app.use(express.urlencoded());
+    // app.use(isAuthenticated);
 
-    app.post("/login", (req, res) => {
-        const { username, password } = req.body;
-
-        if (username === "root" && password === "root") {
-            //login correct
-            const token = jwt.sign({
-                "valid": true,
-                "id": 0,
-                "ttl": 3600,    //Time to live in seconds - standart are 5 minutes
-                "username": "root",
-            }, getJwtSecret());
-
-            res.setHeader("Authorization", `Bearer ${token}`);
-
-            if (req.query.goto != null) {
-                res.redirect(req.query.goto);
-            } else {
-                res.end();
-            }
-        } else {
-            //login incorrect
-            res.redirect("..");
-        }
-    });
-
-    app.get("/auth", (req, res) => {
-        const token = req.query.token;
-
-        if (!token) {
-            const decodedToken = jwt.verify(token, getJwtSecret());
-            return {
-                validUntil: (decodedToken.ttl * 1000) + Date.now(),
-                valid: Date.now() < this.validUntil
-            }
-        } else return {
-            valid: false
-        }
+    app.get("/", (req, res) => {
+        res.send("<p><a href='/signin'>Sign In</a><br></a><a href='/signup'>Sign up</a></p>")
     })
 
-    app.post("/logout", (req, res) => {
-        res.clearCookie("token");
+    // console.log(Home);
 
-        if (req.query.goto != null) {
-            res.redirect(req.query.goto);
-        } else {
-            res.end();
-        }
-    });
+    app.use("/user", isAuthenticated, Home);
 
-    app.get("/home", (req, res) => {
-        console.log(res.cookies);
-        // validate(res.cookies.token);
-        res.send("You are logged in!");
-    });
+    app.post("/login",
+        express.json(),
+        express.urlencoded(),
+        LoginRoute);
 
-    app.use("/signin", static("static"));
+    app.get("/logout", LogoutRoute);
+
+    app.post("/auth", AuthenticationRoute);
+
+    app.get("/signin", (req, res) => {
+        res.sendFile(__dirname + "/static/index.html");
+    })
 
     app.listen(9000, () => {
         console.log("Server is running on 9000");
