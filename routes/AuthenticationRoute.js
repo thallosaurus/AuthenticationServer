@@ -25,7 +25,7 @@ module.exports = function (req, res) {
     // console.log(data);
     if (data) {
         res.status(200).end();
-        break;
+        // break;
     } else {
 
         // default:
