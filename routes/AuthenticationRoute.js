@@ -18,16 +18,21 @@ module.exports = function (req, res) {
 
     const token = req.cookies.auth;
 
-    let data = verify(token);
-    // console.log(data);
-    if (data) {
-        res.status(200).end();
-        // break;
-    } else {
-        //token is expired or invalid, remove from cookies
+    try {
+        let data = verify(token);
+        // console.log(data);
+        if (data) {
+            res.status(200).end();
+        }
+            // break;
+/*         } else {
+            //token is expired or invalid, remove from cookies
+            res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
+            // res.status(301).end();
+            // return;
+        } */
+    } catch (e) {
         res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
-        // res.status(301).end();
-        // return;
     }
     // }
 }
