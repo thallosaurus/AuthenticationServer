@@ -29,7 +29,7 @@
 
     app.get("/logout", LogoutRoute);
 
-    app.post("/auth", AuthenticationRoute);
+    app.get("/auth", AuthenticationRoute);
 
     app.use("/signin", (req, res) => {
         res.sendFile(__dirname + "/dist/index.html");

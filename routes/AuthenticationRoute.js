@@ -8,9 +8,11 @@ const { auth, splitAuthHeader } = require("../logic/AuthLogic.js");
 module.exports = function(req, res) {
     // if (res.setHeader("Authorization", `Bearer ${token}`);)
     if (!req.header["authorization"]) {
-        res.status(400).end();
+        res.status(403).end();
         return;
     }
+
+    console.log(req.header);
 
     const { authorization } = req.header;
 
@@ -20,10 +22,12 @@ module.exports = function(req, res) {
         case "Bearer":
             let data = auth(t_array[TOKEN_INDEX]);
             // console.log(data);
-            res.status(200).end();
-            break;
+            if (data) {
+                res.status(200).end();
+                break;
+            }
         default:
-            res.status(400).end();
+            res.status(403).end();
             return;
     }
 }
