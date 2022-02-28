@@ -7,7 +7,8 @@ const { verify, splitAuthHeader } = require("../logic/AuthLogic.js");
  */
 module.exports = function (req, res) {
     // if (res.setHeader("Authorization", `Bearer ${token}`);)
-    console.log(req.cookies);
+    console.log(req.query);
+    const { onfail } = req.query;
     if (!req.cookies.auth) {
         res.status(403).end();
         return;
@@ -23,9 +24,11 @@ module.exports = function (req, res) {
         res.status(200).end();
         // break;
     } else {
-
-        // default:
-        res.status(403).end();
+        if (onfail) {
+            res.redirect(onfail).end();
+        } else {
+            res.status(403).end();
+        }
         return;
     }
     // }
