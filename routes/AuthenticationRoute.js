@@ -33,6 +33,7 @@ module.exports = function (req, res) {
 } catch (e) {
         //token is expired or invalid, remove from cookies
         res.cookie("auth", token, { maxAge: 0, httpOnly: true });
+        res.status(403).end();
     }
     // }
 }
