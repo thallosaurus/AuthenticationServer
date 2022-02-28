@@ -1,4 +1,4 @@
-const { auth, splitAuthHeader } = require("../logic/AuthLogic.js");
+const { verify, splitAuthHeader } = require("../logic/AuthLogic.js");
 
 /**
  * This module handles the /auth route
@@ -17,11 +17,7 @@ module.exports = function (req, res) {
 
     const token = req.cookies.auth;
 
-    // const t_array = splitAuthHeader(auth);
-
-    // switch (t_array.type) {
-    // case "Bearer":
-    let data = auth(token);
+    let data = verify(token);
     // console.log(data);
     if (data) {
         res.status(200).end();
