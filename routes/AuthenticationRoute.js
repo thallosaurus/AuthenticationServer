@@ -5,30 +5,32 @@ const { auth, splitAuthHeader } = require("../logic/AuthLogic.js");
  * @param {*} req 
  * @param {*} res 
  */
-module.exports = function(req, res) {
+module.exports = function (req, res) {
     // if (res.setHeader("Authorization", `Bearer ${token}`);)
-    console.log(req.headers);
-    if (!req.header["authorization"]) {
+    console.log(req.cookies);
+    if (!req.cookies.auth) {
         res.status(403).end();
         return;
     }
 
     // console.log(req.header);
 
-    const { authorization } = req.header;
+    const token = req.cookies.auth;
 
-    const t_array = splitAuthHeader(authorization);
+    // const t_array = splitAuthHeader(auth);
 
-    switch (t_array.type) {
-        case "Bearer":
-            let data = auth(t_array[TOKEN_INDEX]);
-            // console.log(data);
-            if (data) {
-                res.status(200).end();
-                break;
-            }
-        default:
-            res.status(403).end();
-            return;
+    // switch (t_array.type) {
+    // case "Bearer":
+    let data = auth(token);
+    // console.log(data);
+    if (data) {
+        res.status(200).end();
+        break;
+    } else {
+
+        // default:
+        res.status(403).end();
+        return;
     }
+    // }
 }
