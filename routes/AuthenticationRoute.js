@@ -30,7 +30,7 @@ module.exports = function (req, res) {
             // res.status(403).end();
         // }
         res.setHeader("Location", "/logout");
-        res.status(403).end();
+        res.status(301).end();
         // return;
     }
     // }
