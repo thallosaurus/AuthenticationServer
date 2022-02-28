@@ -31,10 +31,10 @@
 
     app.post("/auth", AuthenticationRoute);
 
-    // app.use("/signin", (req, res) => {
-        // res.sendFile(__dirname + "/dist/index.html");
-    // });
-    // app.use("/assets", express.static("dist/assets"));
+    app.use("/signin", (req, res) => {
+        res.sendFile(__dirname + "/dist/index.html");
+    });
+    app.use("/assets", express.static("dist/assets"));
 
     app.listen(9000, () => {
         console.log("Server is running on 9000");
