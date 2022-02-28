@@ -26,13 +26,13 @@ module.exports = function (req, res) {
         }
             // break;
 /*         } else {
-            //token is expired or invalid, remove from cookies
-            res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
-            // res.status(301).end();
-            // return;
-        } */
-    } catch (e) {
-        res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
+    res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
+    // res.status(301).end();
+    // return;
+} */
+} catch (e) {
+        //token is expired or invalid, remove from cookies
+        res.cookie("auth", token, { maxAge: 0, httpOnly: true });
     }
     // }
 }
