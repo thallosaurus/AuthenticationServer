@@ -7,7 +7,7 @@ const { auth, splitAuthHeader } = require("../logic/AuthLogic.js");
  */
 module.exports = function(req, res) {
     // if (res.setHeader("Authorization", `Bearer ${token}`);)
-    console.log(req.header);
+    console.log(req.headers);
     if (!req.header["authorization"]) {
         res.status(403).end();
         return;
