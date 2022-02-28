@@ -24,12 +24,14 @@ module.exports = function (req, res) {
         res.status(200).end();
         // break;
     } else {
-        if (onfail) {
-            res.redirect(onfail).end();
-        } else {
-            res.status(403).end();
-        }
-        return;
+        // if (onfail) {
+            // res.redirect(onfail).end();
+        // } else {
+            // res.status(403).end();
+        // }
+        res.setHeader("Location", "/logout");
+        res.status(403).end();
+        // return;
     }
     // }
 }
