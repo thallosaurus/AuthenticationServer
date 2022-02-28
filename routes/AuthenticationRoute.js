@@ -24,13 +24,9 @@ module.exports = function (req, res) {
         res.status(200).end();
         // break;
     } else {
-        // if (onfail) {
-            // res.redirect(onfail).end();
-        // } else {
-            // res.status(403).end();
-        // }
-        res.setHeader("Location", "/logout");
-        res.status(301).end();
+        //token is expired or invalid, remove from cookies
+        res.cookie("auth", token, { maxAge: EXPIRATION_IN_SECONDS, httpOnly: true });
+        // res.status(301).end();
         // return;
     }
     // }
