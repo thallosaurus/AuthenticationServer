@@ -16,11 +16,11 @@
 
     app.use(cookieParser());
 
-    app.get("/", (req, res) => {
-        res.send("<p><a href='/signin'>Sign In</a><br></a><a href='/signup'>Sign up</a></p>")
-    })
+    // app.get("/", (req, res) => {
+        // res.send("<p><a href='/signin'>Sign In</a><br></a><a href='/signup'>Sign up</a></p>")
+    // })
 
-    app.use("/user", isAuthenticated, Home);
+    // app.use("/user", isAuthenticated, Home);
 
     app.post("/login",
         express.json(),
@@ -31,9 +31,10 @@
 
     app.post("/auth", AuthenticationRoute);
 
-    app.get("/signin", (req, res) => {
-        res.sendFile(__dirname + "/static/index.html");
-    })
+    // app.use("/signin", (req, res) => {
+        // res.sendFile(__dirname + "/dist/index.html");
+    // });
+    // app.use("/assets", express.static("dist/assets"));
 
     app.listen(9000, () => {
         console.log("Server is running on 9000");
