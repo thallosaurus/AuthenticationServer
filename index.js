@@ -5,12 +5,12 @@
     const cookieParser = require("cookie-parser");
     const LogoutRoute = require("./routes/LogoutRoute.js");
 
-    const Home = require("./UserArea/Home.js");
+    // const Home = require("./UserArea/Home.js");
 
-    const isAuthenticated = require("./middleware/isAuthenticated.js");
+    // const isAuthenticated = require("./middleware/isAuthenticated.js");
 
     const express = require("express");
-    const static = require("express-static");
+    // const static = require("express-static");
 
     const app = express();
 
