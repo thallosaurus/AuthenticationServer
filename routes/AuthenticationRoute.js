@@ -16,6 +16,9 @@ module.exports = function(req, res) {
 
     const t_array = splitAuthHeader(authorization);
 
+    console.log(req.header);
+    console.log(req.header["x-forwarded-uri"]);
+
     switch (t_array.type) {
         case "Bearer":
             let data = auth(t_array[TOKEN_INDEX]);

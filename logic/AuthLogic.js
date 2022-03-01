@@ -33,7 +33,8 @@ module.exports.login = function (username, password) {
     if (username === "root" && password === "root") {
         const sessionId = createNewSession(EXPIRATION_IN_SECONDS);
         return jwt.sign({
-            sessionId: sessionId
+            sessionId: sessionId,
+            allowedPaths: ["/user"]
         }, { key: privateKey, passphrase: "top secret" }, {
             algorithm: "RS512",
             expiresIn: EXPIRATION_IN_SECONDS,
